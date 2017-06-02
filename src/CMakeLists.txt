@@ -6,8 +6,11 @@ set(APP_SRC_FILES
 	cap.c
 	nano_bmp.c
 	utils.c
+	imageprocess.cpp
 	)
 
+find_package(OpenCV REQUIRED core highgui)
+include_directories(${OpenCV_INCLUDE_DIRS})
 include_directories(${PROJECT_SOURCE_DIR}/src)
 include_directories(${PROJECT_SOURCE_DIR}/include)
 include_directories(${PROJECT_SOURCE_DIR}/ext/libyuv/include)
@@ -20,5 +23,5 @@ add_executable(${APP_NAME} ${APP_SRC_FILES})
 add_dependencies(${APP_NAME} ${ly_lib_name})
 add_dependencies(${APP_NAME} uWS)
 #target_include_directories(${APP_NAME} PUBLIC ../src)
-target_link_libraries(${APP_NAME} LINK_PUBLIC uWS ${ly_lib_name}  m c pthread z cairo X11 Xext x264 x265)
+target_link_libraries(${APP_NAME} LINK_PUBLIC uWS ${ly_lib_name}  m c pthread z cairo X11 Xext x264 x265 ${OpenCV_LIBS})
 #install(TARGETS ${APP_NAME} RUNTIME DESTINATION bin)

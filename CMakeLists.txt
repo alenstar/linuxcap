@@ -21,7 +21,7 @@ endif()
 set(APP_NAME "lcap")
 #set(APP_LIB_NAME "libcutils")
 
-set(DEBUG "true")
+option(DEBUG "debug" OFF)
 if (DEBUG)
     add_definitions(-DDEBUG)
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O0 -ggdb")
@@ -34,13 +34,13 @@ endif()
 # code coverage options
 set(GCOV_FLAGS "-fprofile-arcs -ftest-coverage")
 
-set(DEBUG_FLAGS "-g -O0 -std=c++11 -Wall")
-set(RELEASE_FLAGS "-O3 -std=c++11 -Wall")
+set(DEBUG_FLAGS "-g -O0 -Wall")
+set(RELEASE_FLAGS "-O3 -Wall")
 
-set(CMAKE_CXX_FLAGS ${RELEASE_FLAGS})
+set(CMAKE_CXX_FLAGS "-std=c++11 -O3 -Wall -D_GLIBCXX_USE_CXX11_ABI=1")
 set(CMAKE_C_FLAGS ${RELEASE_FLAGS})
 
-set(CMAKE_CXX_FLAGS_DEBUG ${DEBUG_FLAGS})
+set(CMAKE_CXX_FLAGS_DEBUG "-std=c++11 -g -O0 -Wall -D_GLIBCXX_USE_CXX11_ABI=1")
 set(CMAKE_CXX_FLAGS_DEBUG ${GCOV_FLAGS})
 set(CMAKE_C_FLAGS_DEBUG ${DEBUG_FLAGS})
 set(CMAKE_C_FLAGS_DEBUG ${GCOV_FLAGS})
@@ -51,6 +51,7 @@ set(CMAKE_EXE_LINKER_FLAGS_DEBUG ${GCOV_FLAGS})
 set(CMAKE_CONFIGURATION_TYPES Debug Release)
 #message("CMAKE_CFG_INTDIR = ${CMAKE_CFG_INTDIR}")
 
+set(LIBYUV_TEST OFF CACHE BOOL "")
 set(ly_lib_name "yuv")
 add_subdirectory(ext/uWebSockets)
 add_subdirectory(ext/libyuv)
@@ -59,10 +60,10 @@ add_subdirectory(src)
 # used by doc home and in packaging
 set(README_FILE ${PROJECT_SOURCE_DIR}/README.md)
 # Licensing and stuff like that
-set(LICENSE_FILE ${PROJECT_SOURCE_DIR}/LICENSE-MIT)
+#set(LICENSE_FILE ${PROJECT_SOURCE_DIR}/LICENSE-MIT)
 install(FILES
 	${README_FILE}
-	${LICENSE_FILE}
+	#${LICENSE_FILE}
   DESTINATION .
 )
 
